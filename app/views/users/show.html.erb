@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<h1><%= @user.email %></h1>
+
+<p>Image List: </p>
+<ul>
+	<% @user.images.each do |image| %>
+		<li><%= image.name%> | <%= image.author%> | <%= image.verse%> | <%=link_to "Show", image %></li>
+	<% end %>	
+</ul>
+
+<%= link_to 'New Image', new_image_path %>

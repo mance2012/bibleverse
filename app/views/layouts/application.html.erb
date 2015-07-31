@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BibleVerse</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+	<title>BibleVerse</title>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+	<div class="header">
+		Header Memu
+		<ul>
+			<li><%= link_to "Home", root_path%></li>
+		
+			<% if user_signed_in? %>
+			<li><%= link_to current_user.email, current_user %></li>
+			<li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 
-<% console %>
+			<% else %>
+
+			<li><%= link_to "Sign In", new_user_session_path, :method => :get %></li>
+			<li><%= link_to "Sign up", new_user_registration_path, :method => :get %></li>
+
+			<% end %>
+		</ul>
+	</div>
+	<%= yield %>
+
+	<div class="footer">
+		Footer 
+	</div>
+
+	<% console %>
 </body>
 </html>

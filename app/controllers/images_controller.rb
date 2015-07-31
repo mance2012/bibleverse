@@ -1,4 +1,5 @@
 class ImagesController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
   # GET /images
@@ -26,16 +27,12 @@ class ImagesController < ApplicationController
   def create
 
     @image = Image.new(image_params)
+    @image.user = current_user
     # @image.image_file_path = image_file_params
 
     respond_to do |format|
-      if @image.save!
 
-        # save image files...
-        # task 1: calculte the image size ????
-        imagefile = Imagefile.new(image_path_params) 
-  
-        imagefile.image = @image
+      if @image.save!
 
         image_path_params.each do |img_path|
 
