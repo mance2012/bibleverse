@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730235454) do
+ActiveRecord::Schema.define(version: 20150801003554) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "parent_id",  limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+
+  create_table "categorizations", force: :cascade do |t|
+    t.integer  "image_id",    limit: 4
+    t.integer  "category_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "categorizations", ["category_id"], name: "index_categorizations_on_category_id", using: :btree
+  add_index "categorizations", ["image_id"], name: "index_categorizations_on_image_id", using: :btree
 
   create_table "imagefiles", force: :cascade do |t|
     t.string   "size",            limit: 255
@@ -53,6 +72,8 @@ ActiveRecord::Schema.define(version: 20150730235454) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "categorizations", "categories"
+  add_foreign_key "categorizations", "images"
   add_foreign_key "imagefiles", "images"
   add_foreign_key "images", "users"
 end

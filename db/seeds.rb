@@ -6,39 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Image.destroy_all()
-Imagefile.destroy_all()
+# Image.destroy_all()
+# Imagefile.destroy_all()
+Category.destroy_all()
 
-imagefile1 = Imagefile.create(
-	size: "120*200"
-	)
+root = Category.create(name: "root")
+cate1 = root.children.create(name: "Backgrouds")
+cate2 = root.children.create(name: "Clip Art")
 
-imagefile2 = Imagefile.create(
-	size: "200*250"
-	)
+cate1.children.create("name" => "Photography")
+cate1.children.create("name" => "Illustration")
+cate1.children.create("name" => "Painting")
 
-Image.create([
-	{
-		name: 'demo1',
-		desc: 'asdasdsad',
-		author: 'ray',
-		verse: 'john-1-3',
-		imagefiles: [imagefile1,imagefile2]
-	}, 
 
-	{
-		name: 'demo2',
-		desc: 'demo2demo2demo2',
-		author: 'liuchao',
-		verse: 'john-15-3'
-	}, 
+p "Create the Category!!"
 
-	{
-		name: 'demo3',
-		desc: 'demo23asddemo2demo2',
-		author: 'liuchao123',
-		verse: 'marthew-15-3'
-	}
-])
-
-p "Create 3 Image"
