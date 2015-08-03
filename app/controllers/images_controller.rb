@@ -16,10 +16,14 @@ class ImagesController < ApplicationController
   # GET /images/new
   def new
     @image = Image.new
+    @categories = Category.all
   end
 
   # GET /images/1/edit
   def edit
+    @checked_cates = Categorization.where(image_id: params[:id]).map {|cate| cate.category_id}
+    @categories = Category.all
+    @image_files = Imagefile.where(image_id: params[:id])
   end
 
   # POST /images
@@ -34,21 +38,35 @@ class ImagesController < ApplicationController
 
       if @image.save!
 
-        image_path_params.each do |img_path|
+        # create the catelization item
+        @cate_ids = image_cate_params
 
-          puts img_path
-
-          imagefile = Imagefile.new(image_file_path: img_path) 
-          
-          imagefile.image = @image
-
-          if imagefile.save!
-            size = imagefile.image_size['width'].to_s + "*" + imagefile.image_size['height'].to_s
-            puts "Size: " + size
-            imagefile.size = size
-            imagefile.save!
+        @cate_ids.each do |cate_id| 
+          @categorization = Categorization.new()
+          @categorization.category = Category.find(cate_id)
+          @categorization.image = @image
+          if @categorization.save!
+              p "Sucess"
+          else
+              p "Fail to add category!"
           end
         end
+
+          image_path_params.each do |img_path|
+
+            # puts img_path
+
+            imagefile = Imagefile.new(image_file_path: img_path) 
+            
+            imagefile.image = @image
+
+            if imagefile.save!
+              size = imagefile.image_size['width'].to_s + "*" + imagefile.image_size['height'].to_s
+              puts "Size: " + size
+              imagefile.size = size
+              imagefile.save!
+            end
+          end
 
 
         format.html { redirect_to @image, notice: 'Image was successfully created.' }
@@ -62,24 +80,39 @@ class ImagesController < ApplicationController
 
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
-  def update
-    # @image.image_file_path = image_file_params
-    
+  def update    
     respond_to do |format|
       if @image.update(image_params)
         # puts "Image Array:"
         # puts params[:image][:image_file_path]
 
-        image_path_params.each do |img_path|
+        # destroy the current categories
+        Categorization.where(image_id: @image.id).destroy_all
 
-          imagefile = Imagefile.new(image_file_path: img_path)           
-          imagefile.image = @image
+        @cate_ids = image_cate_params
+        @cate_ids.each do |cate_id| 
+          @categorization = Categorization.new()
+          @categorization.category = Category.find(cate_id)
+          @categorization.image = @image
+          if @categorization.save!
+              p "Sucess"
+          else
+              p "Fail to add category!"
+          end
+        end
 
-          if imagefile.save!
-            size = imagefile.image_size['width'].to_s + "*" + imagefile.image_size['height'].to_s
-            puts "Size: " + size
-            imagefile.size = size
-            imagefile.save!
+        if image_path_params
+          image_path_params.each do |img_path|
+
+            imagefile = Imagefile.new(image_file_path: img_path)           
+            imagefile.image = @image
+
+            if imagefile.save!
+              size = imagefile.image_size['width'].to_s + "*" + imagefile.image_size['height'].to_s
+              puts "Size: " + size
+              imagefile.size = size
+              imagefile.save!
+            end
           end
         end
 
@@ -116,6 +149,10 @@ class ImagesController < ApplicationController
 
     def image_path_params
       params[:image][:image_file_path]
+    end
+
+    def image_cate_params
+      params[:cate_ids]
     end
 
 end

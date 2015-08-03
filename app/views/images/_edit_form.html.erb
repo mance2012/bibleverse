@@ -36,20 +36,36 @@
     <ul>
       <% @categories.each do |cate| %>
           <li>
-            <%= check_box_tag 'cate_ids[]', cate.id %>
+            <% if @checked_cates.include? cate.id%>
+              <%= check_box_tag 'cate_ids[]', cate.id, true%>
+            <%else %>
+              <%= check_box_tag 'cate_ids[]', cate.id%>
+            <%end %>
             <%= h cate.name -%>
           </li>
       <% end %>
     </ul>
+    
   </div>
 
   <div>
-    <%= f.label :image_file_path "Add new images:"%>
+    <%= f.label :image_file_path, "Add new images:"%>
     <%= f.file_field :image_file_path, multiple: true %>
     <%= f.hidden_field :image_file_path_cache %>
   </div>
 
+  <div>
+    <ul>
+      <% @image_files.each do |image_file|%>
+      <li><%= image_file.id %>
+      <%= link_to 'Destroy', imagefile_path(image_file),
+            :confirm => 'Are you sure?', :method => :delete, :remote => true %>
+      </li>
+      <% end%>
+    </ul>
+  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update"%>
   </div>
 <% end %>
