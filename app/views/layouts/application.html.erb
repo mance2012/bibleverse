@@ -6,30 +6,59 @@
 	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	<%= csrf_meta_tags %>
 </head>
-<body>
+<body role="document">
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">iBibleVerse</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><%= link_to "Home", root_path%></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></a>
+						<ul class="dropdown-menu">
 
-	<div class="header">
-		Header Memu
-		<ul>
-			<li><%= link_to "Home", root_path%></li>
-		
-			<% if user_signed_in? %>
-			<li><%= link_to current_user.email, current_user %></li>
-			<li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+							<% Category.all.each do |cate| %>
+							<li><%= link_to cate.name, cate %></li>
+							<% end %>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav user_menu">
+					<% if user_signed_in? %>
+					<li class="user_menu"><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+					<li class="user_menu"><%= link_to current_user.email, current_user %></li>
 
-			<% else %>
+					<% else %>
 
-			<li><%= link_to "Sign In", new_user_session_path, :method => :get %></li>
-			<li><%= link_to "Sign up", new_user_registration_path, :method => :get %></li>
+					<li class="user_menu"><%= link_to "Sign In", new_user_session_path, :method => :get %></li>
+					<li class="user_menu"><%= link_to "Sign up", new_user_registration_path, :method => :get %></li>
 
-			<% end %>
-		</ul>
+					<% end %>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+	
+	<div class="container theme-showcase" role="main">
+		<%= yield %>
 	</div>
-	<%= yield %>
 
-	<div class="footer">
-		Footer 
-	</div>
+	<footer class="footer">
+	      <div class="container">
+	        <p class="text-muted">© G&IT 2015, All Rights Reserved.</p>
+	      </div>
+	</footer>
 
 	<% console %>
 </body>

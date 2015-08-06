@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-
+<%= link_to 'Edit', edit_image_path(@image) %> |
+<%= link_to 'Back', images_path %>
 
 <h1><%= @image.name %></h1>
 
@@ -23,5 +24,4 @@ Category: <span>
 
 <p>Relative verse: <%= @image.verse %></p>
 
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
+

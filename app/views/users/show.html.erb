@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-
-
 <h1><%= @user.email %></h1>
+
+<%= link_to 'New Image', new_image_path %>
 
 <p>Image List: </p>
 <ul>
@@ -11,4 +11,4 @@
 	<% end %>	
 </ul>
 
-<%= link_to 'New Image', new_image_path %>
+

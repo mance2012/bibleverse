@@ -53,7 +53,8 @@ class ImagefilesController < ApplicationController
 
   # DELETE /imagefiles/1
   # DELETE /imagefiles/1.json
-  def destroy
+  def destroy    
+    @id = @imagefile.id
     @imagefile.destroy
     respond_to do |format|
       format.html { redirect_to imagefiles_url, notice: 'Imagefile was successfully destroyed.' }
