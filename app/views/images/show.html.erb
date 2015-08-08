@@ -5,16 +5,17 @@
 
 <h1><%= @image.name %></h1>
 
-Created by<span> <%= @image.author %> </span>
+Submit by<span> <%= @image.user.id %> </span> 
+<br>
 
+Created by<span> <%= @image.author %> </span>
 <br>
 
 Category: <span> 
 	<%= @image.categories.map {|cate| cate.name} .join(', ') %>
-
 </span>
 
-<p><%= @image.desc %></p>
+Description: <p><%= @image.desc %></p>
 
 <% @image.imagefiles.each do |imagefile|%>
 <p><%= imagefile.size %></p>

@@ -24,3 +24,7 @@ ul.user_menu {
 .navbar-nav > li.user_menu {
 	float: right;
 }
+
+.navbar-nav > li span.user-icon {
+    padding-top: 15px;
+}
