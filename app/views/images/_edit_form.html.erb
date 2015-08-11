@@ -55,9 +55,9 @@
   </div>
 
   <div>
-    <ul>
+    <ul class="upload_images">
       <% @image_files.each do |image_file|%>
-      <li><%= image_file.id %>
+      <li id="<%= image_file.id %>"><%= image_file.id %>
       <%= link_to 'Destroy', imagefile_path(image_file),
             :confirm => 'Are you sure?', :method => :delete, :remote => true %>
       </li>

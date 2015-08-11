@@ -7,5 +7,9 @@ class Image < ActiveRecord::Base
 
 	belongs_to :user
 
+	def default_url(*args)
+    	"default.png"
+  	end
+
 	mount_uploader :image_file_path, ImageFilePathUploader
 end
