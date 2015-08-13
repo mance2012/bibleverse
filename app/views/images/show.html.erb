@@ -6,36 +6,32 @@
 	<div class="row">
 		<ol class="breadcrumb">
 		  <li><a href="/">Home</a></li>
-		  <li><a href="#"><%= @image.categories.map {|cate| cate.name} .join(', ') %></a></li>
+		  <li><a href="#"><%= @image.categories.map {|cate| cate.name} .join('/ ') %></a></li>
 		  <li class="active"><%= @image.name %></li>
 		</ol>
 	</div>
 	<div class="row">
 		<h1><%= @image.name %></h1>
-		<div class="col-md-4">By <%= @image.created_at %></div>
+		<div class="col-md-4">By On <%= @image.created_at.strftime("%B %d,%Y") %></div>
 
-		<% @image.imagefiles.each do |imagefile|%>
-		<%if @image.imagefiles.first %>
-			<img class="img-responsive img-center" src="<%= imagefile.image_file_path %>">
-		<% end %>	
-		<% end %>
+		<img class="img-responsive img-center" src="<%= @image.imagefiles.first.image_file_path %>">
+		
 	</div>
 	<div class="row">
-		<div class="col-md-1"><strong>Author:</strong></div>
-		<div class="col-md-4"> <%= @image.author %> </div>
-	</div>
-	<div class="row">
-		<div class="col-md-1"><strong>Description:</strong></div>
-		<div class="col-md-4"> <%= @image.desc %> </div>
-	</div>
-	<div class="row">
-		<div class="col-md-1"><strong>Download:</strong></div>
-		<div class="col-md-4"> 
-			<% @image.imagefiles.each do |imagefile|%>
-			<p><%= imagefile.size %></p>
+		<dl class="dl-horizontal">
+		  <dt>Author:</dt>
+		  <dd><%= @image.author %></dd>
+		  <dt>Description:</dt>
+		  <dd><%= @image.desc %></dd>
+		  <dt>Download:</dt>
+		  <dd>
+		  	<% @image.imagefiles.each do |imagefile|%>
+				<p><%= link_to imagefile.size, imagefile %></p>
 			<% end %>
-		</div>
+		  </dd>
+		</dl>
 	</div>
+	
 </div>
 	<!-- <p>Relative verse: <%= @image.verse %></p> -->
 
