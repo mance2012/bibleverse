@@ -11,5 +11,9 @@ class Image < ActiveRecord::Base
     	"default.png"
   	end
 
+  	# has_attached_file :images, 
+   #  :path => ':rails_root/public/uploads/imagefile/image_file_path/:id/:basename.:extension'
+  	# attr_protected :document_file_name, :document_content_type, :document_file_size
+
 	mount_uploader :image_file_path, ImageFilePathUploader
 end

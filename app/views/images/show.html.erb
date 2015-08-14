@@ -26,7 +26,8 @@
 		  <dt>Download:</dt>
 		  <dd>
 		  	<% @image.imagefiles.each do |imagefile|%>
-				<p><%= link_to imagefile.size, imagefile %></p>
+		  		<p><%#= imagefile.size %></p>
+				<p><%= link_to imagefile.size, image_imagefile_path(@image, imagefile) %></p>
 			<% end %>
 		  </dd>
 		</dl>

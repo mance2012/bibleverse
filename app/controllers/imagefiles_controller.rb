@@ -21,6 +21,17 @@ class ImagefilesController < ApplicationController
   def edit
   end
 
+  def download  
+    @filename = Imagefile.find(params[:id])
+
+    @filepath = "#{Rails.root}/public/#{@filename.image_file_path.url}"
+    send_file @filepath ,:type => 'image/jpeg', :disposition => 'attachment'
+
+    # @image.document.path, :type => 'image/jpeg', :filename => @thing.permalink
+  end
+
+
+
   # POST /imagefiles
   # POST /imagefiles.json
   def create

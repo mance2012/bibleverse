@@ -1,4 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_imagefile_path(@imagefile) %> |
-<%= link_to 'Back', imagefiles_path %>
+<%= link_to 'Edit', edit_image_imagefile_path(@imagefile.image, @imagefile) %> |
+<%= link_to 'Back', image_imagefiles_path %>
+
+<div class="row">
+
+	<%= link_to "Download", download_image_imagefile_path(@imagefile.image, @imagefile), class: "btn btn-primary" %>
+	<!-- <a href="" class="btn btn-primary">Download</a> -->
+	<h2><%= @imagefile.size %></h2>
+	<div class="col-md-4">By On <%= @imagefile.created_at.strftime("%B %d,%Y") %></div>
+
+	<img class="img-responsive img-center" src="<%= @imagefile.image_file_path %>">
+	
+</div>
+
+
