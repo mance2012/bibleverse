@@ -13,6 +13,9 @@
     <%= f.text_field :username, autofocus: true %>
   </div>
 
+  <div><%= f.label :date_of_birth %><br />
+        <%= f.date_select :date_of_birth %>
+  </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
